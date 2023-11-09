@@ -4,6 +4,12 @@ This is documentation to help you get started with this project either as a user
 
 <br><br><br>
 
+# [Planning](planning.md)
+
+### This document describes the planning phase of this project.
+
+<br><br><br>
+
 # [User Manual](manual_user.md)
 
 ### This manual is intended for users of this project.
