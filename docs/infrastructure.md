@@ -2,13 +2,15 @@
 
 This document describes the infrastructure used for this project.
 
+## Infrastructure Diagram
+
 <img src="diagrams/Infrastructure.drawio.png" alt="Infrastructure Diagram" height="500" />
 
 You can find diagrams for viewing and/or editing in the [diagrams](diagrams) directory.
 
-Click on any of the headers below to learn more about the mentioned topic.
-
 ## Table of Contents
+
+Click on any of the headers below to learn more about the mentioned topic.
 
 - **Cloudflare**
 
@@ -56,6 +58,8 @@ Currently, we use Cloudflare DNS to manage the following domains:
 
 - `optocloud.no`
 
+### Setting up Cloudflare DNS
+
 ## [Cloudflare Pages](https://www.cloudflare.com/developer-platform/pages/)
 
 Cloudflare Pages allows you to host web-apps on Cloudflare's global network of servers.
@@ -67,6 +71,8 @@ It was selected for the following reasons:
 - It's free for low-traffic websites with the option to pay for higher usage limits
 - Automated deployments from GitHub repositories are easy to set up
 - It's fast by default due to edge caching, and it being serverless increases its reliability and scalability
+
+### Setting up Cloudflare Pages
 
 <br><br>
 
@@ -90,25 +96,19 @@ It was selected for the following reasons:
 - It supports continuous deployment from GitHub repositories
 - Azure is a trusted provider with a lot of experience in the industry and has good documentation
 
-## [Azure SQL Database](https://azure.microsoft.com/en-us/products/azure-sql/database/)
+## [Azure Database for PostgreSQL](https://azure.microsoft.com/en-us/products/azure-sql/database/)
 
-Azure SQL Database is a service that allows you to host SQL databases.
+Azure Database for PostgreSQL is a service that allows you to host PostgreSQL databases.
 
 It was selected for the following reasons:
 
-- It's a relational database, which is easy to understand and something I have experience with
+- This was reccomended by Azure when I was setting up the backend App Service.
+- It's a relational database, which is easy to understand and something I have experience with.
 - It's a managed service, meaning that Microsoft handles all of the maintenance, updates, security, scaling, etc.
 - It's on the same platform as the backend meaning that they can easily communicate with each other in a secure way via private virtual networks
-- Azure is a trusted provider with a lot of experience in the industry and has good documentation
+- Azure is a trusted provider with a lot of experience in the industry and has good documentation.
 
-## [Azure Key Vault](https://azure.microsoft.com/en-us/products/key-vault/)
-
-Azure Key Vault is a service that allows you to store and manage secrets.
-
-It was selected for the following reasons:
-
-- Easy to set up and manage
-- It's integrated with Azure App Service, meaning that secrets can be accessed easily from the backend
+We use Azure Database for PostgreSQL to store all of the user, project, and task data.
 
 <br><br>
 
