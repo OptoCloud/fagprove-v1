@@ -2,7 +2,9 @@
 
 This document describes the infrastructure used for this project.
 
-You can find schematics of the infrastructure in the [diagrams](diagrams) folder.
+<img src="diagrams/Infrastructure.drawio.png" alt="Infrastructure Diagram" height="500" />
+
+You can find diagrams for viewing and/or editing in the [diagrams](diagrams) directory.
 
 Click on any of the headers below to learn more about the mentioned topic.
 
