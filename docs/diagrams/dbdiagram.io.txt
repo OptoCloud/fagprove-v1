@@ -1,0 +1,37 @@
+Table users {
+  id uuid [primary key]
+  username varchar
+  email varchar
+  password_hash varchar
+  created_at timestamp
+}
+
+table authtokens {
+  id uuid [primary key]
+  user_id uuid
+  token_hash varchar
+  created_at timestamp
+  expires_at timestamp
+}
+
+table projects {
+  id uuid [primary key]
+  user_id uuid
+  title varchar
+  description varchar
+  created_at timestamp
+}
+
+table tasks {
+  id uuid [primary key]
+  project_id uuid
+  title varchar
+  description varchar
+  due_date timestamp
+  status varchar
+  created_at timestamp
+}
+
+Ref: authtokens.user_id > users.id
+Ref: projects.user_id > users.id
+Ref: tasks.project_id > projects.id
