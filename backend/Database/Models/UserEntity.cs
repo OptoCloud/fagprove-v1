@@ -14,6 +14,8 @@ public class UserEntity
     public required string PasswordHash { get; set; }
 
     public DateTime CreatedAt { get; private set; }
+
+    public ICollection<ProjectEntity> Projects { get; set; }
 }
 
 public class UserEntityConfiguration : IEntityTypeConfiguration<UserEntity>
