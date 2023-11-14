@@ -1,6 +1,6 @@
 namespace backend.DTOs;
 
-public struct RegisterUserRequestDTO
+public struct AccountRegisterApiRequest
 {
     public string Username { get; set; }
     public string Email { get; set; }

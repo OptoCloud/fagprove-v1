@@ -11,12 +11,12 @@ public interface IUserService
     /// </summary>
     /// <param name="request"></param>
     /// <returns></returns>
-    public Task<OneOf<UserEntity, ErrorDTO>> Register(RegisterUserRequestDTO request);
+    public Task<OneOf<UserEntity, ApiError>> Register(AccountRegisterApiRequest request);
 
     /// <summary>
     /// Returns a authentication token if the login was successful, otherwise returns a error DTO containing the error message
     /// </summary>
     /// <param name="request"></param>
     /// <returns></returns>
-    public Task<OneOf<string, ErrorDTO>> Login(LoginUserRequestDTO request);
+    public Task<OneOf<string, ApiError>> Login(AccountLoginApiRequest request);
 }

@@ -17,21 +17,21 @@ public class UserService : IUserService
         _logger = logger;
     }
 
-    public async Task<OneOf<UserEntity, ErrorDTO>> Register(RegisterUserRequestDTO request)
+    public async Task<OneOf<UserEntity, ApiError>> Register(AccountRegisterApiRequest request)
     {
         if (request.Password != request.PasswordConfirmation)
         {
-            return new ErrorDTO("Passwords do not match");
+            return new ApiError("Passwords do not match");
         }
 
         if (await _dbContext.Users.AnyAsync(e => e.Username == request.Username))
         {
-            return new ErrorDTO("Username is already taken");
+            return new ApiError("Username is already taken");
         }
 
         if (await _dbContext.Users.AnyAsync(e => e.Email == request.Email))
         {
-            return new ErrorDTO("Email is already taken");
+            return new ApiError("Email is already taken");
         }
 
         var user = new UserEntity
@@ -47,19 +47,19 @@ public class UserService : IUserService
         return user;
     }
 
-    public async Task<OneOf<string, ErrorDTO>> Login(LoginUserRequestDTO request)
+    public async Task<OneOf<string, ApiError>> Login(AccountLoginApiRequest request)
     {
         var user = await _dbContext.Users.FirstOrDefaultAsync(e => e.Username == request.Username);
 
         if (user == null)
         {
             await Task.Delay(2000); // Simulate a slow response to prevent timing attacks
-            return new ErrorDTO("Invalid username or password");
+            return new ApiError("Invalid username or password");
         }
 
         if (!BCrypt.Net.BCrypt.Verify(request.Password, user.PasswordHash))
         {
-            return new ErrorDTO("Invalid username or password");
+            return new ApiError("Invalid username or password");
         }
 
         // Fill a 32-byte buffer with random data, and then convert it to a hex string to get a 64-character long cryptographically secure token

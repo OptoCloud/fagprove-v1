@@ -16,20 +16,20 @@ public class UserController : ControllerBase
     }
 
     [HttpPost("register")]
-    public async Task<IActionResult> Register([FromBody] RegisterUserRequestDTO request)
+    public async Task<IActionResult> Register([FromBody] AccountRegisterApiRequest request)
     {
         var result = await _userService.Register(request);
 
         // Map the result to an IActionResult
-        return result.Match<IActionResult>(_ => Ok(), BadRequest);
+        return result.Match<IActionResult>(_ => Ok(), err => BadRequest(err));
     }
 
     [HttpPost("login")]
-    public async Task<IActionResult> Login([FromBody] LoginUserRequestDTO request)
+    public async Task<IActionResult> Login([FromBody] AccountLoginApiRequest request)
     {
         var result = await _userService.Login(request);
 
         // Map the result to an IActionResult
-        return result.Match<IActionResult>(result => Ok(new AuthTokenResponseDTO { Token = result }), BadRequest);
+        return result.Match<IActionResult>(token => Ok(new AccountLoginApiResponse { Token = token }), err => BadRequest(err));
     }
 }

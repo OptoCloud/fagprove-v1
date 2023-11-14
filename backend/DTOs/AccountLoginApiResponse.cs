@@ -1,6 +1,6 @@
 ﻿namespace backend.DTOs;
 
-public struct AuthTokenResponseDTO
+public struct AccountLoginApiResponse
 {
     public string Token { get; set; }
 }

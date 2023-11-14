@@ -1,8 +1,8 @@
 ﻿namespace backend.DTOs;
 
-public class ErrorDTO
+public struct ApiError
 {
-    public ErrorDTO(string error)
+    public ApiError(string error)
     {
         Error = error;
     }
