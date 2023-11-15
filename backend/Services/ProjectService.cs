@@ -17,18 +17,28 @@ public class ProjectService : IProjectService
         _logger = logger;
     }
 
-    public Task<ProjectEntity?> GetProject(Guid projectId)
+    public Task<ProjectEntity?> GetProjectAsync(Guid projectId)
     {
         return _dbContext.Projects.FirstOrDefaultAsync(e => e.Id == projectId);
     }
 
-    public IAsyncEnumerable<ProjectEntity> GetProjectsByUserId(Guid userId)
+    public IAsyncEnumerable<ProjectEntity> GetProjectsByUserIdAsync(Guid userId)
     {
         return _dbContext.Projects.Where(e => e.OwnerId == userId).AsAsyncEnumerable();
     }
 
-    public async Task<OneOf<ProjectEntity, ApiError>> CreateProject(Guid ownerUserId, string title, string description)
+    public async Task<OneOf<ProjectEntity, ApiError>> CreateProjectAsync(Guid ownerUserId, string title, string description)
     {
+        if (string.IsNullOrWhiteSpace(title))
+        {
+            return new ApiError("Title cannot be empty");
+        }
+
+        if (await _dbContext.Projects.AnyAsync(e => e.Title == title))
+        {
+            return new ApiError("Project with this title already exists");
+        }
+
         var project = new ProjectEntity
         {
             OwnerId = ownerUserId,
@@ -42,7 +52,7 @@ public class ProjectService : IProjectService
         return project;
     }
 
-    public async Task<OneOf<ProjectEntity, ApiError>> UpdateProject(Guid projectId, Action<ProjectEntity> action)
+    public async Task<OneOf<ProjectEntity, ApiError>> UpdateProjectAsync(Guid projectId, Action<ProjectEntity> modifyAction)
     {
         var project = await _dbContext.Projects.FirstOrDefaultAsync(e => e.Id == projectId);
 
@@ -51,14 +61,14 @@ public class ProjectService : IProjectService
             return new ApiError("Project not found");
         }
 
-        action(project);
+        modifyAction(project);
 
         await _dbContext.SaveChangesAsync();
 
         return project;
     }
 
-    public async Task<OneOf<ProjectEntity, ApiError>> DeleteProject(Guid projectId)
+    public async Task<OneOf<ProjectEntity, ApiError>> DeleteProjectAsync(Guid projectId)
     {
         var project = await _dbContext.Projects.FirstOrDefaultAsync(e => e.Id == projectId);
 
